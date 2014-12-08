@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/luc/ros_workspace/alg_robo_p2/catkin/install/setup.sh

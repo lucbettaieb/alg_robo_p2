@@ -1,0 +1,6 @@
+/home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles/clean_test_results.dir
+/home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles/doxygen.dir
+/home/luc/ros_workspace/alg_robo_p2/catkin/build/gtest/CMakeFiles/gtest.dir
+/home/luc/ros_workspace/alg_robo_p2/catkin/build/gtest/CMakeFiles/gtest_main.dir
+/home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles/run_tests.dir
+/home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles/tests.dir
