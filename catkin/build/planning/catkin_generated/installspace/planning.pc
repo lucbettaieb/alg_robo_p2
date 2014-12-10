@@ -1,0 +1,8 @@
+prefix=/home/luc/ros_workspace/alg_robo_p2/catkin/install
+
+Name: planning
+Description: Description of planning
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/luc/ros_workspace/alg_robo_p2/catkin/install/lib 
+Requires: 

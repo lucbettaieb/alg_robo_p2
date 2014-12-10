@@ -1,0 +1,17 @@
+footprint: [[0.20,0.20], [0.20,0.20], [0.20,0.20], [0.20, 0.20]]
+
+obstacle_layer:
+	observation_sources: scan
+	scan:
+		sensor_frame: robot0_laser_0
+		data_type: LaserScan
+		topic: /robot0/laser_0
+		marking: true
+		clearing: true
+		expected_update_rate: 10
+		inf_is_valid: true
+	obstacle_range: 4
+	raytrace_range: 4
+
+inflation_layer:
+	inflation_radius: 2.0
