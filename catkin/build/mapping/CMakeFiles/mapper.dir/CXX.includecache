@@ -13,6 +13,10 @@ tf/transform_listener.h
 -
 costmap_2d/costmap_2d_ros.h
 -
+nav_msgs/OccupancyGrid.h
+-
+vector
+-
 
 /opt/ros/hydro/include/XmlRpcDecl.h
 ros/macros.h
