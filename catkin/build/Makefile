@@ -498,6 +498,97 @@ stdr_msgs_generate_messages_py/fast:
 .PHONY : stdr_msgs_generate_messages_py/fast
 
 #=============================================================================
+# Target rules for targets named algp2_msgs_gencpp
+
+# Build rule for target.
+algp2_msgs_gencpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 algp2_msgs_gencpp
+.PHONY : algp2_msgs_gencpp
+
+# fast build rule for target.
+algp2_msgs_gencpp/fast:
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/build
+.PHONY : algp2_msgs_gencpp/fast
+
+#=============================================================================
+# Target rules for targets named algp2_msgs_generate_messages
+
+# Build rule for target.
+algp2_msgs_generate_messages: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 algp2_msgs_generate_messages
+.PHONY : algp2_msgs_generate_messages
+
+# fast build rule for target.
+algp2_msgs_generate_messages/fast:
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/build
+.PHONY : algp2_msgs_generate_messages/fast
+
+#=============================================================================
+# Target rules for targets named algp2_msgs_generate_messages_cpp
+
+# Build rule for target.
+algp2_msgs_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 algp2_msgs_generate_messages_cpp
+.PHONY : algp2_msgs_generate_messages_cpp
+
+# fast build rule for target.
+algp2_msgs_generate_messages_cpp/fast:
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/build
+.PHONY : algp2_msgs_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named algp2_msgs_generate_messages_lisp
+
+# Build rule for target.
+algp2_msgs_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 algp2_msgs_generate_messages_lisp
+.PHONY : algp2_msgs_generate_messages_lisp
+
+# fast build rule for target.
+algp2_msgs_generate_messages_lisp/fast:
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/build
+.PHONY : algp2_msgs_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named algp2_msgs_generate_messages_py
+
+# Build rule for target.
+algp2_msgs_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 algp2_msgs_generate_messages_py
+.PHONY : algp2_msgs_generate_messages_py
+
+# fast build rule for target.
+algp2_msgs_generate_messages_py/fast:
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/build
+.PHONY : algp2_msgs_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named algp2_msgs_genlisp
+
+# Build rule for target.
+algp2_msgs_genlisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 algp2_msgs_genlisp
+.PHONY : algp2_msgs_genlisp
+
+# fast build rule for target.
+algp2_msgs_genlisp/fast:
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/build
+.PHONY : algp2_msgs_genlisp/fast
+
+#=============================================================================
+# Target rules for targets named algp2_msgs_genpy
+
+# Build rule for target.
+algp2_msgs_genpy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 algp2_msgs_genpy
+.PHONY : algp2_msgs_genpy
+
+# fast build rule for target.
+algp2_msgs_genpy/fast:
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/build
+.PHONY : algp2_msgs_genpy/fast
+
+#=============================================================================
 # Target rules for targets named actionlib_generate_messages_cpp
 
 # Build rule for target.
@@ -1018,6 +1109,13 @@ help:
 	@echo "... stdr_msgs_generate_messages_cpp"
 	@echo "... stdr_msgs_generate_messages_lisp"
 	@echo "... stdr_msgs_generate_messages_py"
+	@echo "... algp2_msgs_gencpp"
+	@echo "... algp2_msgs_generate_messages"
+	@echo "... algp2_msgs_generate_messages_cpp"
+	@echo "... algp2_msgs_generate_messages_lisp"
+	@echo "... algp2_msgs_generate_messages_py"
+	@echo "... algp2_msgs_genlisp"
+	@echo "... algp2_msgs_genpy"
 	@echo "... actionlib_generate_messages_cpp"
 	@echo "... actionlib_generate_messages_lisp"
 	@echo "... actionlib_generate_messages_py"

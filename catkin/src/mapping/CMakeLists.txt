@@ -5,6 +5,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   stdr_msgs
+  algp2_msgs
   tf
   costmap_2d
 )

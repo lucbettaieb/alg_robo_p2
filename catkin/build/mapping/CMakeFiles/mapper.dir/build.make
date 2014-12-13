@@ -78,7 +78,6 @@ mapper_EXTERNAL_OBJECTS =
 
 /home/luc/ros_workspace/alg_robo_p2/catkin/devel/lib/mapping/mapper: mapping/CMakeFiles/mapper.dir/src/mapper.cpp.o
 /home/luc/ros_workspace/alg_robo_p2/catkin/devel/lib/mapping/mapper: /opt/ros/hydro/lib/libcostmap_2d.so
-/home/luc/ros_workspace/alg_robo_p2/catkin/devel/lib/mapping/mapper: /opt/ros/hydro/lib/liblayers.so
 /home/luc/ros_workspace/alg_robo_p2/catkin/devel/lib/mapping/mapper: /opt/ros/hydro/lib/liblaser_geometry.so
 /home/luc/ros_workspace/alg_robo_p2/catkin/devel/lib/mapping/mapper: /opt/ros/hydro/lib/libpcl_ros_filters.so
 /home/luc/ros_workspace/alg_robo_p2/catkin/devel/lib/mapping/mapper: /opt/ros/hydro/lib/libpcl_ros_io.so

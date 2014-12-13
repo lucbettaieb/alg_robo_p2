@@ -87,7 +87,7 @@ clean: CMakeFiles/clean_test_results.dir/clean
 CMakeFiles/doxygen.dir/all:
 	$(MAKE) -f CMakeFiles/doxygen.dir/build.make CMakeFiles/doxygen.dir/depend
 	$(MAKE) -f CMakeFiles/doxygen.dir/build.make CMakeFiles/doxygen.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles  1
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles  5
 	@echo "Built target doxygen"
 .PHONY : CMakeFiles/doxygen.dir/all
 
@@ -196,7 +196,7 @@ gtest/preinstall:
 gtest/CMakeFiles/gtest.dir/all:
 	$(MAKE) -f gtest/CMakeFiles/gtest.dir/build.make gtest/CMakeFiles/gtest.dir/depend
 	$(MAKE) -f gtest/CMakeFiles/gtest.dir/build.make gtest/CMakeFiles/gtest.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles  2
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles  6
 	@echo "Built target gtest"
 .PHONY : gtest/CMakeFiles/gtest.dir/all
 
@@ -227,7 +227,7 @@ clean: gtest/CMakeFiles/gtest.dir/clean
 gtest/CMakeFiles/gtest_main.dir/all: gtest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles  3
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles  7
 	@echo "Built target gtest_main"
 .PHONY : gtest/CMakeFiles/gtest_main.dir/all
 
@@ -938,6 +938,271 @@ clean: controller/CMakeFiles/stdr_msgs_generate_messages_py.dir/clean
 .PHONY : clean
 
 #=============================================================================
+# Directory level rules for directory planning
+
+# Convenience name for "all" pass in the directory.
+planning/all:
+.PHONY : planning/all
+
+# Convenience name for "clean" pass in the directory.
+planning/clean:
+.PHONY : planning/clean
+
+# Convenience name for "preinstall" pass in the directory.
+planning/preinstall:
+.PHONY : planning/preinstall
+
+#=============================================================================
+# Directory level rules for directory algp2_msgs
+
+# Convenience name for "all" pass in the directory.
+algp2_msgs/all: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/all
+.PHONY : algp2_msgs/all
+
+# Convenience name for "clean" pass in the directory.
+algp2_msgs/clean: algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/clean
+algp2_msgs/clean: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/clean
+algp2_msgs/clean: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/clean
+algp2_msgs/clean: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/clean
+algp2_msgs/clean: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/clean
+algp2_msgs/clean: algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/clean
+algp2_msgs/clean: algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/clean
+.PHONY : algp2_msgs/clean
+
+# Convenience name for "preinstall" pass in the directory.
+algp2_msgs/preinstall:
+.PHONY : algp2_msgs/preinstall
+
+#=============================================================================
+# Target rules for target algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir
+
+# All Build rule for target.
+algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/all: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/all
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/depend
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 
+	@echo "Built target algp2_msgs_gencpp"
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/all
+
+# Build rule for subdir invocation for target.
+algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 0
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/rule
+
+# Convenience name for target.
+algp2_msgs_gencpp: algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/rule
+.PHONY : algp2_msgs_gencpp
+
+# clean rule for target.
+algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/clean:
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/clean
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/clean
+
+# clean rule for target.
+clean: algp2_msgs/CMakeFiles/algp2_msgs_gencpp.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir
+
+# All Build rule for target.
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/all: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/all
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/all: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/all
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/all: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/all
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/depend
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 
+	@echo "Built target algp2_msgs_generate_messages"
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/all
+
+# Include target in all.
+all: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 0
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/rule
+
+# Convenience name for target.
+algp2_msgs_generate_messages: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/rule
+.PHONY : algp2_msgs_generate_messages
+
+# clean rule for target.
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/clean:
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/clean
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/clean
+
+# clean rule for target.
+clean: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir
+
+# All Build rule for target.
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/all: controller/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/all: controller/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/all: controller/CMakeFiles/nav_msgs_generate_messages_cpp.dir/all
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/depend
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles  1
+	@echo "Built target algp2_msgs_generate_messages_cpp"
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/all
+
+# Build rule for subdir invocation for target.
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 0
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+algp2_msgs_generate_messages_cpp: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/rule
+.PHONY : algp2_msgs_generate_messages_cpp
+
+# clean rule for target.
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/clean:
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/clean
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/clean
+
+# clean rule for target.
+clean: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_cpp.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir
+
+# All Build rule for target.
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/all: controller/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/all: controller/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/all: controller/CMakeFiles/nav_msgs_generate_messages_lisp.dir/all
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/depend
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles  2
+	@echo "Built target algp2_msgs_generate_messages_lisp"
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/all
+
+# Build rule for subdir invocation for target.
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 0
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+algp2_msgs_generate_messages_lisp: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/rule
+.PHONY : algp2_msgs_generate_messages_lisp
+
+# clean rule for target.
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/clean:
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/clean
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/clean
+
+# clean rule for target.
+clean: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir
+
+# All Build rule for target.
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/all: controller/CMakeFiles/nav_msgs_generate_messages_py.dir/all
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/all: controller/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/all: controller/CMakeFiles/std_msgs_generate_messages_py.dir/all
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/depend
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles  3 4
+	@echo "Built target algp2_msgs_generate_messages_py"
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/all
+
+# Build rule for subdir invocation for target.
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 0
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+algp2_msgs_generate_messages_py: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/rule
+.PHONY : algp2_msgs_generate_messages_py
+
+# clean rule for target.
+algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/clean:
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/clean
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/clean
+
+# clean rule for target.
+clean: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir
+
+# All Build rule for target.
+algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/all: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_lisp.dir/all
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/depend
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 
+	@echo "Built target algp2_msgs_genlisp"
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/all
+
+# Build rule for subdir invocation for target.
+algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 0
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/rule
+
+# Convenience name for target.
+algp2_msgs_genlisp: algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/rule
+.PHONY : algp2_msgs_genlisp
+
+# clean rule for target.
+algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/clean:
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/clean
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/clean
+
+# clean rule for target.
+clean: algp2_msgs/CMakeFiles/algp2_msgs_genlisp.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir
+
+# All Build rule for target.
+algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/all: algp2_msgs/CMakeFiles/algp2_msgs_generate_messages_py.dir/all
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/depend
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 
+	@echo "Built target algp2_msgs_genpy"
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/all
+
+# Build rule for subdir invocation for target.
+algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles 0
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/rule
+
+# Convenience name for target.
+algp2_msgs_genpy: algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/rule
+.PHONY : algp2_msgs_genpy
+
+# clean rule for target.
+algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/clean:
+	$(MAKE) -f algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/build.make algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/clean
+.PHONY : algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/clean
+
+# clean rule for target.
+clean: algp2_msgs/CMakeFiles/algp2_msgs_genpy.dir/clean
+.PHONY : clean
+
+#=============================================================================
 # Directory level rules for directory mapping
 
 # Convenience name for "all" pass in the directory.
@@ -1522,7 +1787,7 @@ clean: mapping/CMakeFiles/map_msgs_generate_messages_py.dir/clean
 mapping/CMakeFiles/mapper.dir/all:
 	$(MAKE) -f mapping/CMakeFiles/mapper.dir/build.make mapping/CMakeFiles/mapper.dir/depend
 	$(MAKE) -f mapping/CMakeFiles/mapper.dir/build.make mapping/CMakeFiles/mapper.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles  4
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/luc/ros_workspace/alg_robo_p2/catkin/build/CMakeFiles  8
 	@echo "Built target mapper"
 .PHONY : mapping/CMakeFiles/mapper.dir/all
 
@@ -2138,21 +2403,6 @@ mapping/CMakeFiles/topic_tools_generate_messages_py.dir/clean:
 # clean rule for target.
 clean: mapping/CMakeFiles/topic_tools_generate_messages_py.dir/clean
 .PHONY : clean
-
-#=============================================================================
-# Directory level rules for directory planning
-
-# Convenience name for "all" pass in the directory.
-planning/all:
-.PHONY : planning/all
-
-# Convenience name for "clean" pass in the directory.
-planning/clean:
-.PHONY : planning/clean
-
-# Convenience name for "preinstall" pass in the directory.
-planning/preinstall:
-.PHONY : planning/preinstall
 
 #=============================================================================
 # Special targets to cleanup operation of make.

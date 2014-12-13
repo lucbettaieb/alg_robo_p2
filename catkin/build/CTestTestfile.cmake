@@ -6,5 +6,6 @@
 # testing this directory and lists subdirectories to be tested as well.
 SUBDIRS(gtest)
 SUBDIRS(controller)
-SUBDIRS(mapping)
 SUBDIRS(planning)
+SUBDIRS(algp2_msgs)
+SUBDIRS(mapping)
