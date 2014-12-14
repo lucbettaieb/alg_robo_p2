@@ -16,13 +16,21 @@
 ros::Subscriber sub_map2d_;
 
 std::vector< std::vector<int> > map_(746, std::vector<int>(775, 0));
-std::vector
 
 struct obstaclePoint{
 	int x;
 	int y;
 	bool occ;
 };
+std::vector<obstaclePoint> obstacles;
+
+obstaclePoint makeObstacle(int ex, int wy){
+	obstaclePoint p;
+	p.x = ex;
+	p.y = wy;
+
+	return p;
+}
 
 class QNode {
 	QNode *nw, *ne, *sw, *se; 	// Pointers to children nodes of the individual QNode
@@ -56,6 +64,16 @@ void gotMap2dCB(const algp2_msgs::Map2D &map2d){
 
 }
 
+void findObstacles(){
+	for(int i = 0; i < map_.size(); i++){
+		for(int j = 0; j < map_.at(0).size(); j++){
+			if(map_.at(i).at(j) == 100){
+				obstacles.push_back(makeObstacle(i,j));
+			}
+		}
+	}
+}
+
 int main(int argc, char** argv){
 	ros::init(argc, argv, "global_planner");
 	ros::NodeHandle nh;
@@ -63,6 +81,8 @@ int main(int argc, char** argv){
 	sub_map2d_ = nh.subscribe("/map2d", 10, gotMap2dCB);
 
 	//Second, we'll need to find all of the obstacles and their associated positions within the map.
+	findObstacles();
+	//Now the vector obstacles should be filled with obstacle structs
 
 	std::cout << "col size" << map_.size() << std::endl;
 	std::cout << "row size" << map_.at(0).size() << std::endl;
