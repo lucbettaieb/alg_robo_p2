@@ -27,50 +27,63 @@
 /*---------------Fields--------------*/
 bool gotGrid = false;
 bool map2dReadyToPub = false;
+bool alreadyStuffed = false;
 
 ros::Subscriber sub_map_;
 ros::Publisher pub_map2d_;
-std::vector< std::vector<int> > map_(___**width, std::vector<int>(___**height, 0)); //global map to better represent occupancy grid map
+//FOR NOW:  This will be configured for use with the default map loaded by roslaunch stdr_world stdr_server.launch
+//Width and height manually have been set to 775 and 746 corresponding with stdr_server.launch map file
+
+std::vector< std::vector<int> > map_(746, std::vector<int>(775, 0)); //global map to better represent occupancy grid map
 
 algp2_msgs::Map2D pubby_map_;
 
 /*---------------Functions--------------*/
 void convertOccupancyGridTo2DVector(nav_msgs::OccupancyGrid grid, std::vector< std::vector<int> > &map){		
-	ROS_INFO("convertOccupancyGridTo2DVector");
+	ROS_INFO("convertOccupancyGridTo2DVector...");
+	
 	int row = 0;
 	int col = 0;
-	
-	for(int j = 0; j < grid.info.height; j++, col++){
-		ROS_INFO("entering loop");
-		if(j % grid.info.width == 0) {
-			ROS_INFO("new row, resetting columns");
-			row++;
+
+	for(int i = 0; i < grid.data.size(); i++, col++){
+		if((i >= 744) && ((i % grid.info.width) == 0) ){
 			col = 0;
+			row++;
 		}
-		std::cout << "j: " << j << std::endl;
-		map.at(row).at(col) = grid.data.at(j);
-		//map[row, col] = grid[j] 
-		//Thanks sds
+		//std::cout << "i: " << i << "| row: " << row << "| col: " << col<< std::endl;
+
+		map.at(row).at(col) = grid.data.at(i);
 	}
+	ROS_INFO("...done converting occupancy grid to 2d vector");
 }
 
 void gotMapCB(const nav_msgs::OccupancyGrid &grid){
-	ROS_INFO("Got map cb");
 	if(!gotGrid){ //If a grid has not already been created...  No need to make another as the environment is static.
+		ROS_INFO("Got map cb");
 		convertOccupancyGridTo2DVector(grid, map_);
+		gotGrid = true; //Should have finished nicely!
 	}
-	
-	gotGrid = true; //Should have finished nicely!
 }
 
 void stuff2DVecIntoMap2DAndPublish(){
-	ROS_INFO("stuff2DVecIntoMap2DAndPublish");
-	for(int j = 0; j < map_.size(); j++){  //Should just need to push back 
-		for(int i = 0; i < map_.at(0).size(); i++){
-			pubby_map_.columns.at(j).data.at(i) = map_.at(j).at(i); //test this
+	if(!alreadyStuffed){
+		ROS_INFO("stuff2DVecIntoMap2DAndPublish");
+		pubby_map_.columns.resize(746);
+
+		for(int i = 0; i < 746; i++){
+			pubby_map_.columns.at(i).data.resize(775);
 		}
+		for(int j = 0; j < map_.size(); j++){  //Should just need to push back 
+			for(int i = 0; i < map_.at(0).size(); i++){
+
+				//std::cout << "i: " << i << "| j: " << j << std::endl;
+				//pubby_map_.columns.at(j).data.at(i) = map_.at(j).at(i); //test this
+				pubby_map_.columns.at(j).data.push_back(map_.at(j).at(i));
+			}
+		}
+		map2dReadyToPub = true;
+		alreadyStuffed = true;
 	}
-	map2dReadyToPub = true;
 }
 
 /*---------------Main--------------*/
@@ -86,14 +99,21 @@ int main(int argc, char** argv){
 	//nh.setParam("costmap/global_frame", "/map"); //Default characteristics.
 	//nh.setParam("costmap/robot_base_frame", "/robot0");
 	//nh.setParam("costmap/rolling_window", true);
+
 	ROS_INFO("Gonna loop now:");
 	while(ros::ok()){
 		sub_map_ = nh.subscribe("/map", 10, gotMapCB);
 
 		if(gotGrid)
 			stuff2DVecIntoMap2DAndPublish();
-		if(map2dReadyToPub)
+		if(map2dReadyToPub){
+			ROS_INFO("Publishing map!");
+			ros::Duration(0.1).sleep();
 			pub_map2d_.publish(pubby_map_);
+		}
+
+
+
 		
 
 		ros::spinOnce();
