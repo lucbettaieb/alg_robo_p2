@@ -27,6 +27,7 @@
 /home/luc/ros_workspace/alg_robo_p2/catkin/build/controller/CMakeFiles/geometry_msgs_generate_messages_cpp.dir
 /home/luc/ros_workspace/alg_robo_p2/catkin/build/controller/CMakeFiles/geometry_msgs_generate_messages_lisp.dir
 /home/luc/ros_workspace/alg_robo_p2/catkin/build/controller/CMakeFiles/geometry_msgs_generate_messages_py.dir
+/home/luc/ros_workspace/alg_robo_p2/catkin/build/planning/CMakeFiles/global_planner.dir
 /home/luc/ros_workspace/alg_robo_p2/catkin/build/gtest/CMakeFiles/gtest.dir
 /home/luc/ros_workspace/alg_robo_p2/catkin/build/gtest/CMakeFiles/gtest_main.dir
 /home/luc/ros_workspace/alg_robo_p2/catkin/build/mapping/CMakeFiles/map_msgs_generate_messages_cpp.dir

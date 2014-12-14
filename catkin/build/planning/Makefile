@@ -146,6 +146,44 @@ depend:
 	cd /home/luc/ros_workspace/alg_robo_p2/catkin/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
+# Convenience name for target.
+planning/CMakeFiles/global_planner.dir/rule:
+	cd /home/luc/ros_workspace/alg_robo_p2/catkin/build && $(MAKE) -f CMakeFiles/Makefile2 planning/CMakeFiles/global_planner.dir/rule
+.PHONY : planning/CMakeFiles/global_planner.dir/rule
+
+# Convenience name for target.
+global_planner: planning/CMakeFiles/global_planner.dir/rule
+.PHONY : global_planner
+
+# fast build rule for target.
+global_planner/fast:
+	cd /home/luc/ros_workspace/alg_robo_p2/catkin/build && $(MAKE) -f planning/CMakeFiles/global_planner.dir/build.make planning/CMakeFiles/global_planner.dir/build
+.PHONY : global_planner/fast
+
+src/global_planner.o: src/global_planner.cpp.o
+.PHONY : src/global_planner.o
+
+# target to build an object file
+src/global_planner.cpp.o:
+	cd /home/luc/ros_workspace/alg_robo_p2/catkin/build && $(MAKE) -f planning/CMakeFiles/global_planner.dir/build.make planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o
+.PHONY : src/global_planner.cpp.o
+
+src/global_planner.i: src/global_planner.cpp.i
+.PHONY : src/global_planner.i
+
+# target to preprocess a source file
+src/global_planner.cpp.i:
+	cd /home/luc/ros_workspace/alg_robo_p2/catkin/build && $(MAKE) -f planning/CMakeFiles/global_planner.dir/build.make planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.i
+.PHONY : src/global_planner.cpp.i
+
+src/global_planner.s: src/global_planner.cpp.s
+.PHONY : src/global_planner.s
+
+# target to generate assembly for a file
+src/global_planner.cpp.s:
+	cd /home/luc/ros_workspace/alg_robo_p2/catkin/build && $(MAKE) -f planning/CMakeFiles/global_planner.dir/build.make planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.s
+.PHONY : src/global_planner.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -153,12 +191,16 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... global_planner"
 	@echo "... install"
 	@echo "... install/local"
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... src/global_planner.o"
+	@echo "... src/global_planner.i"
+	@echo "... src/global_planner.s"
 .PHONY : help
 
 

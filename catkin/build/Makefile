@@ -1069,6 +1069,19 @@ topic_tools_generate_messages_py/fast:
 	$(MAKE) -f mapping/CMakeFiles/topic_tools_generate_messages_py.dir/build.make mapping/CMakeFiles/topic_tools_generate_messages_py.dir/build
 .PHONY : topic_tools_generate_messages_py/fast
 
+#=============================================================================
+# Target rules for targets named global_planner
+
+# Build rule for target.
+global_planner: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 global_planner
+.PHONY : global_planner
+
+# fast build rule for target.
+global_planner/fast:
+	$(MAKE) -f planning/CMakeFiles/global_planner.dir/build.make planning/CMakeFiles/global_planner.dir/build
+.PHONY : global_planner/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1153,6 +1166,7 @@ help:
 	@echo "... topic_tools_generate_messages_cpp"
 	@echo "... topic_tools_generate_messages_lisp"
 	@echo "... topic_tools_generate_messages_py"
+	@echo "... global_planner"
 .PHONY : help
 
 

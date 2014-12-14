@@ -68,11 +68,13 @@ void gotMapCB(const nav_msgs::OccupancyGrid &grid){
 void stuff2DVecIntoMap2DAndPublish(){
 	if(!alreadyStuffed){
 		ROS_INFO("stuff2DVecIntoMap2DAndPublish");
+
 		pubby_map_.columns.resize(746);
 
 		for(int i = 0; i < 746; i++){
-			pubby_map_.columns.at(i).data.resize(775);
+			pubby_map_.columns.at(i).data.resize(0);
 		}
+		
 		for(int j = 0; j < map_.size(); j++){  //Should just need to push back 
 			for(int i = 0; i < map_.at(0).size(); i++){
 
@@ -81,6 +83,9 @@ void stuff2DVecIntoMap2DAndPublish(){
 				pubby_map_.columns.at(j).data.push_back(map_.at(j).at(i));
 			}
 		}
+
+		//std::cout << "row size pubby: "<<pubby_map_.columns.at(0).data.size() << std::endl;
+
 		map2dReadyToPub = true;
 		alreadyStuffed = true;
 	}
@@ -111,10 +116,6 @@ int main(int argc, char** argv){
 			ros::Duration(0.1).sleep();
 			pub_map2d_.publish(pubby_map_);
 		}
-
-
-
-		
 
 		ros::spinOnce();
 	}
