@@ -16,7 +16,11 @@ const int width = 1230;
 const int height = 630;
 
 std::vector< std::vector<int> > map_(height, std::vector<int>(width, 0)); //regular map.at(y).at(x)
+
 std::vector<obstaclePoint> obstacles;
+
+std::vector<geometry_msgs::Point> lowerPoints;
+std::vector<geometry_msgs::Point> upperPoints;
 
 visualization_msgs::Marker criticalArea;
 
@@ -31,10 +35,10 @@ obstaclePoint makeObstacle(int ex, int wy){
 	return p;
 }
 
-geometry_msgs::Point makePoint(int ex, int wy){
+geometry_msgs::Point makePoint(float ex, float wy){
 	geometry_msgs::Point point;
-	point.x = (float)ex;
-	point.y = (float)wy;
+	point.x = ex;
+	point.y = wy;
 	point.z = 0;
 
 	return point;
@@ -45,45 +49,38 @@ void processObstacles(){
 	//This function will find critial points of obstacles.
 	//Theory: find an obstacle that does not have neighboring obstacles in at least 3 cardinal directions
 
-
 	for(int i = 0; i < obstacles.size(); i++){
-		//ros::Duration(0.01).sleep();
-		//std::cout << "x: " <<obstacles.at(i).x << "y: " <<obstacles.at(i).y <<std::endl;
-		if(map_.at(obstacles.at(i).y).at(obstacles.at(i).x-3) == 0 && map_.at(obstacles.at(i).y).at(obstacles.at(i).x-+3) == 0 && map_.at(obstacles.at(i).y+3).at(obstacles.at(i).x) == 0) {
-			//add all critical points to polygon
-			std::cout << "x: " <<obstacles.at(i).x << "y: " <<obstacles.at(i).y <<std::endl;
 
+		//Check for lower extrema
+		if(map_.at(obstacles.at(i).y).at(obstacles.at(i).x-3) == 0 && map_.at(obstacles.at(i).y).at(obstacles.at(i).x+3) == 0 && map_.at(obstacles.at(i).y+3).at(obstacles.at(i).x) == 0) {
+			//criticalArea for visualizing points
 			criticalArea.points.push_back(makePoint(obstacles.at(i).x*0.02, obstacles.at(i).y*0.02));
-			criticalArea.header.stamp = ros::Time();
-			criticalArea.header.frame_id = "world";
-			criticalArea.ns = "my_namespace";
-			criticalArea.id = 0;
-			criticalArea.type = visualization_msgs::Marker::POINTS;
-			criticalArea.action = visualization_msgs::Marker::ADD;
-			criticalArea.color.a = 1.0;
-			criticalArea.color.r = 0.0;
-			criticalArea.color.g = 1.0;
-			criticalArea.color.b = 0.0;
-			criticalArea.scale.x = 0.1;
-			criticalArea.scale.y = 0.1;
-			criticalArea.pose.orientation.x = 0.0;
-			criticalArea.pose.orientation.y = 0.0;
-			criticalArea.pose.orientation.z = 0.0;
-			criticalArea.pose.orientation.w = 1.0;
-
+			lowerPoints.push_back(makePoint(obstacles.at(i).x*0.02, obstacles.at(i).y*0.02));
 		}
-			
-		
 
-		//if(map_.at(obstacles.at(i).y-1).at(obstacles.at(i).x) == 100 && map_.at(obstacles.at(i).y+4).at(obstacles.at(i).x) == 0){
-		 	//std::cout << "i: " << i <<" obstacle: " << map_.at(obstacles.at(i).x).at(obstacles.at(i).y) <<" obstacle y+1: " << map_.at(obstacles.at(i).x).at(obstacles.at(i).y+1) << " obstacle y-1: " << map_.at(obstacles.at(i).x).at(obstacles.at(i).y-1) << std::endl;
-		// 	std::cout << "x: " <<obstacles.at(i).x << "y: " <<obstacles.at(i).y <<std::endl;
-		// }
-
-		//if(map_.at(obstacles.at(i).x).at(obstacles.at(i).y))
+		//Check for upper extrema
+		else if(map_.at(obstacles.at(i).y).at(obstacles.at(i).x-3) == 0 && map_.at(obstacles.at(i).y).at(obstacles.at(i).x+3) == 0 && map_.at(obstacles.at(i).y-3).at(obstacles.at(i).x) == 0){
+			criticalArea.points.push_back(makePoint(obstacles.at(i).x*0.02, obstacles.at(i).y*0.02));
+			upperPoints.push_back(makePoint(obstacles.at(i).x*0.02, obstacles.at(i).y*0.02));
+		}
 	}
-	//publish polygon
-	
+	//Set up marker variables...
+	criticalArea.header.stamp = ros::Time();
+	criticalArea.header.frame_id = "world";
+	criticalArea.ns = "my_namespace";
+	criticalArea.id = 0;
+	criticalArea.type = visualization_msgs::Marker::POINTS;
+	criticalArea.action = visualization_msgs::Marker::ADD;
+	criticalArea.color.a = 1.0;
+	criticalArea.color.r = 0.0;
+	criticalArea.color.g = 1.0;
+	criticalArea.color.b = 0.0;
+	criticalArea.scale.x = 0.1;
+	criticalArea.scale.y = 0.1;
+	criticalArea.pose.orientation.x = 0.0;
+	criticalArea.pose.orientation.y = 0.0;
+	criticalArea.pose.orientation.z = 0.0;
+	criticalArea.pose.orientation.w = 1.0;
 }
 
 void findObstacles(){
@@ -103,6 +100,10 @@ void findObstacles(){
 	processObstacles();
 }
 
+void findMidpoints(){
+	
+}
+
 void gotMap2dCB(const algp2_msgs::Map2D &map2d){
 	if(!gotMap){
 		ROS_INFO("Got map.");
@@ -116,6 +117,11 @@ void gotMap2dCB(const algp2_msgs::Map2D &map2d){
 		}
 		gotMap = true;
 		findObstacles();
+
+		//Now we have the obstacles and critical points, let's find the midpoints that we're going to navigate to!
+		findMidpoints();
+
+
 
 	}
 }
