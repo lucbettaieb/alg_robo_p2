@@ -6,6 +6,10 @@ planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /home/luc/ros_w
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /home/luc/ros_workspace/alg_robo_p2/catkin/src/planning/src/global_planner.cpp
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/XmlRpcDecl.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/XmlRpcValue.h
+planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/geometry_msgs/Point.h
+planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/geometry_msgs/Pose.h
+planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/geometry_msgs/Quaternion.h
+planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/geometry_msgs/Vector3.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/ros/advertise_options.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/ros/advertise_service_options.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/ros/assert.h
@@ -60,7 +64,10 @@ planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/ros/wall_timer.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/ros/wall_timer_options.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/rosconsole/macros_generated.h
+planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/std_msgs/ColorRGBA.h
+planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/std_msgs/Header.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/std_msgs/Int8MultiArray.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/std_msgs/MultiArrayDimension.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/std_msgs/MultiArrayLayout.h
+planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/visualization_msgs/Marker.h
 

@@ -29,12 +29,15 @@ bool gotGrid = false;
 bool map2dReadyToPub = false;
 bool alreadyStuffed = false;
 
+const int width = 1230;
+const int height = 630;
+
 ros::Subscriber sub_map_;
 ros::Publisher pub_map2d_;
 //FOR NOW:  This will be configured for use with the default map loaded by roslaunch stdr_world stdr_server.launch
-//Width and height manually have been set to 775 and 746 corresponding with stdr_server.launch map file
+//Width and height manually have been set to width and height corresponding with stdr_server.launch map file
 
-std::vector< std::vector<int> > map_(746, std::vector<int>(775, 0)); //global map to better represent occupancy grid map
+std::vector< std::vector<int> > map_(height, std::vector<int>(width, 0)); //global map to better represent occupancy grid map
 
 algp2_msgs::Map2D pubby_map_;
 
@@ -69,9 +72,9 @@ void stuff2DVecIntoMap2DAndPublish(){
 	if(!alreadyStuffed){
 		ROS_INFO("stuff2DVecIntoMap2DAndPublish");
 
-		pubby_map_.columns.resize(746);
+		pubby_map_.columns.resize(height);
 
-		for(int i = 0; i < 746; i++){
+		for(int i = 0; i < height; i++){
 			pubby_map_.columns.at(i).data.resize(0);
 		}
 		

@@ -7,31 +7,83 @@
 *
 *	12.12.14
 */
-#include <planning/global_planner.h>
 
+#include <planning/global_planner.h>
 
 ros::Subscriber sub_map2d_;
 bool gotMap = false;
+const int width = 1230;
+const int height = 630;
 
-std::vector< std::vector<int> > map_(746, std::vector<int>(775, 0)); //regular map
-int map_width = 746;
-int map_height = 775;
-
+std::vector< std::vector<int> > map_(height, std::vector<int>(width, 0)); //regular map.at(y).at(x)
 std::vector<obstaclePoint> obstacles;
+
+visualization_msgs::Marker criticalArea;
+
+ros::Publisher pub_critArea_;
 
 obstaclePoint makeObstacle(int ex, int wy){
 	obstaclePoint p;
-	p.x = ex;
-	p.y = wy;
+	p.x = wy; //Flipping obstacle x and y because it was previously messed up... going to see if this helps!
+	p.y = ex;
 	p.occ = true;
 
 	return p;
 }
 
+geometry_msgs::Point makePoint(int ex, int wy){
+	geometry_msgs::Point point;
+	point.x = (float)ex;
+	point.y = (float)wy;
+	point.z = 0;
+
+	return point;
+}
+
 //-----------Regular functions----------//
 void processObstacles(){
-	
+	//This function will find critial points of obstacles.
+	//Theory: find an obstacle that does not have neighboring obstacles in at least 3 cardinal directions
 
+
+	for(int i = 0; i < obstacles.size(); i++){
+		//ros::Duration(0.01).sleep();
+		//std::cout << "x: " <<obstacles.at(i).x << "y: " <<obstacles.at(i).y <<std::endl;
+		if(map_.at(obstacles.at(i).y).at(obstacles.at(i).x-3) == 0 && map_.at(obstacles.at(i).y).at(obstacles.at(i).x-+3) == 0 && map_.at(obstacles.at(i).y+3).at(obstacles.at(i).x) == 0) {
+			//add all critical points to polygon
+			std::cout << "x: " <<obstacles.at(i).x << "y: " <<obstacles.at(i).y <<std::endl;
+
+			criticalArea.points.push_back(makePoint(obstacles.at(i).x*0.02, obstacles.at(i).y*0.02));
+			criticalArea.header.stamp = ros::Time();
+			criticalArea.header.frame_id = "world";
+			criticalArea.ns = "my_namespace";
+			criticalArea.id = 0;
+			criticalArea.type = visualization_msgs::Marker::POINTS;
+			criticalArea.action = visualization_msgs::Marker::ADD;
+			criticalArea.color.a = 1.0;
+			criticalArea.color.r = 0.0;
+			criticalArea.color.g = 1.0;
+			criticalArea.color.b = 0.0;
+			criticalArea.scale.x = 0.1;
+			criticalArea.scale.y = 0.1;
+			criticalArea.pose.orientation.x = 0.0;
+			criticalArea.pose.orientation.y = 0.0;
+			criticalArea.pose.orientation.z = 0.0;
+			criticalArea.pose.orientation.w = 1.0;
+
+		}
+			
+		
+
+		//if(map_.at(obstacles.at(i).y-1).at(obstacles.at(i).x) == 100 && map_.at(obstacles.at(i).y+4).at(obstacles.at(i).x) == 0){
+		 	//std::cout << "i: " << i <<" obstacle: " << map_.at(obstacles.at(i).x).at(obstacles.at(i).y) <<" obstacle y+1: " << map_.at(obstacles.at(i).x).at(obstacles.at(i).y+1) << " obstacle y-1: " << map_.at(obstacles.at(i).x).at(obstacles.at(i).y-1) << std::endl;
+		// 	std::cout << "x: " <<obstacles.at(i).x << "y: " <<obstacles.at(i).y <<std::endl;
+		// }
+
+		//if(map_.at(obstacles.at(i).x).at(obstacles.at(i).y))
+	}
+	//publish polygon
+	
 }
 
 void findObstacles(){
@@ -75,8 +127,16 @@ int main(int argc, char** argv){
 	ros::NodeHandle nh;
 	//First, let's get the map.
 	ROS_INFO("Let's do some global planning! :)");
+	pub_critArea_ = nh.advertise<visualization_msgs::Marker>("/criticalArea", 1);
+	
+	while(ros::ok()){
+		sub_map2d_ = nh.subscribe("/map2d", 10, gotMap2dCB);
+		pub_critArea_.publish(criticalArea);
+		ros::Duration(0.05).sleep();
 
-	sub_map2d_ = nh.subscribe("/map2d", 10, gotMap2dCB);
+		ros::spinOnce();
+	}
+
 
 	ros::spin();
 	return 0;
