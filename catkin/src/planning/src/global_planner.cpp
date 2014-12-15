@@ -10,26 +10,26 @@
 
 #include <planning/global_planner.h>
 
-ros::Subscriber sub_map2d_;
-ros::Publisher pub_critArea_;
-ros::Publisher pub_path_;
+/*----------------Fields---------------------*/
 bool gotMap = false;
 const int width = 1230;
 const int height = 630;
 
-std::vector< std::vector<int> > map_(height, std::vector<int>(width, 0)); //regular map.at(y).at(x)
-
-std::vector<obstaclePoint> obstacles;
-
-std::vector<geometry_msgs::Point> lowerPoints;
-std::vector<geometry_msgs::Point> upperPoints;
-
+/*----------------ROS Fields--------*/
+ros::Subscriber sub_map2d_;
+ros::Publisher pub_critArea_;
+ros::Publisher pub_path_;
 
 visualization_msgs::Marker criticalArea;
 nav_msgs::Path path;
 
+/*----------------Vector Fields-----*/
+std::vector< std::vector<int> > map_(height, std::vector<int>(width, 0)); //regular map.at(y).at(x)
+std::vector<obstaclePoint> obstacles;
+std::vector<geometry_msgs::Point> lowerPoints;
+std::vector<geometry_msgs::Point> upperPoints;
 
-
+/*----------------Helper Functions--*/
 obstaclePoint makeObstacle(int ex, int wy){
 	obstaclePoint p;
 	p.x = wy; //Flipping obstacle x and y because it was previously messed up... going to see if this helps!
@@ -49,12 +49,11 @@ geometry_msgs::Point makePoint(float ex, float wy){
 }
 
 geometry_msgs::PoseStamped makePoseXY(float x, float y, int iSeq){
-	//this causes a segmentation fault... ;c
 	geometry_msgs::PoseStamped poseXY;
 
 	poseXY.header.seq = iSeq;
 	poseXY.header.stamp = ros::Time().now();
-	poseXY.header.frame_id = "world";
+	poseXY.header.frame_id = "map";
 
 	poseXY.pose.position.x = x;
 	poseXY.pose.position.y = y;
@@ -65,7 +64,7 @@ geometry_msgs::PoseStamped makePoseXY(float x, float y, int iSeq){
 
 }
 
-//-----------Regular functions----------//
+/*----------Regular Functions------*/
 
 void removeDuplicates(){
 	float tolerance = 0.02;
@@ -95,7 +94,6 @@ void sortByX(){
 	std::sort(lowerPoints.begin(), lowerPoints.end(), wayToSort);
 	std::sort(upperPoints.begin(), upperPoints.end(), wayToSort);
 }
-
 
 void processObstacles(){
 	//This function will find critial points of obstacles.
@@ -135,6 +133,11 @@ void processObstacles(){
 
 	removeDuplicates();
 	sortByX();
+
+	//Now we can kill map_ and obstacles
+	//This destroys vectors and frees memory by swapping it with vector that does not really exist.
+	//std::vector< std::vector<int> >().swap(map_);
+	//std::vector<obstaclePoint>().swap(obstacles);
 }
 
 void findObstacles(){
@@ -156,21 +159,15 @@ void findObstacles(){
 
 
 void findMidpoints(){
-
 	//Here were going to create a path!
-
-	// for(int i = 0; i < lowerPoints.size(); i++){
-	// 	std::cout << "lowerpoint x: " << lowerPoints.at(i).x << "upperPoints x: " << upperPoints.at(i).x << std::endl;
-	// 	std::cout << "lowerpoint y: " << lowerPoints.at(i).y << "upperPoints y: " << upperPoints.at(i).y << std::endl;
-	// }
 	
 	for(int i = 0; i < lowerPoints.size(); i++){	
 		path.poses.push_back(makePoseXY(lowerPoints.at(i).x, (upperPoints.at(i).y-0.5*(upperPoints.at(i).y-lowerPoints.at(i).y)), i));
-
 	}
 	for(int i = 0; i < path.poses.size(); i++){ //add to marker fo viewin'
 		criticalArea.points.push_back(path.poses.at(i).pose.position);
 	}
+
 }
 
 void assignAngles(){
@@ -183,14 +180,10 @@ void assignAngles(){
   	}
   	//why not assign path a header now?
 
-  	path.header.seq = 1337;
+  	path.header.seq = 1337;  //h4ck3r cr3d
   	path.header.stamp = ros::Time().now();
   	path.header.frame_id = "map";
-
-
-
 }
-
 
 void gotMap2dCB(const algp2_msgs::Map2D &map2d){
 	if(!gotMap){
@@ -212,22 +205,19 @@ void gotMap2dCB(const algp2_msgs::Map2D &map2d){
 		//!!Quaternions are scary
 		assignAngles();
 
-		for(int i = 0; i < path.poses.size(); i++){
-			std::cout << "x: " << path.poses.at(i).pose.position.x << std::endl;
-			std::cout << "y: " << path.poses.at(i).pose.position.y << std::endl;
-			std::cout << "z: " << path.poses.at(i).pose.position.z << std::endl;
+		// for(int i = 0; i < path.poses.size(); i++){
+		// 	std::cout << "x: " << path.poses.at(i).pose.position.x << std::endl;
+		// 	std::cout << "y: " << path.poses.at(i).pose.position.y << std::endl;
+		// 	std::cout << "z: " << path.poses.at(i).pose.position.z << std::endl;
 
-			std::cout << "x: " << path.poses.at(i).pose.orientation.x << std::endl;
-			std::cout << "y: " << path.poses.at(i).pose.orientation.y << std::endl;
-			std::cout << "z: " << path.poses.at(i).pose.orientation.z << std::endl;
-			std::cout << "w: " << path.poses.at(i).pose.orientation.w << std::endl;
+		// 	std::cout << "x: " << path.poses.at(i).pose.orientation.x << std::endl;
+		// 	std::cout << "y: " << path.poses.at(i).pose.orientation.y << std::endl;
+		// 	std::cout << "z: " << path.poses.at(i).pose.orientation.z << std::endl;
+		// 	std::cout << "w: " << path.poses.at(i).pose.orientation.w << std::endl;
 
-		}
-
+		// }
 	}
 }
-
-
 
 int main(int argc, char** argv){
 	ros::init(argc, argv, "global_planner");
@@ -244,8 +234,6 @@ int main(int argc, char** argv){
 
 		ros::spinOnce();
 	}
-
-
 	ros::spin();
 	return 0;
 }
