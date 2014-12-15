@@ -8,8 +8,10 @@ planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/XmlRpcValue.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/geometry_msgs/Point.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/geometry_msgs/Pose.h
+planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/geometry_msgs/PoseStamped.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/geometry_msgs/Quaternion.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/geometry_msgs/Vector3.h
+planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/nav_msgs/Path.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/ros/advertise_options.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/ros/advertise_service_options.h
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o: /opt/ros/hydro/include/ros/assert.h

@@ -9,8 +9,10 @@ planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o
  /opt/ros/hydro/include/XmlRpcValue.h
  /opt/ros/hydro/include/geometry_msgs/Point.h
  /opt/ros/hydro/include/geometry_msgs/Pose.h
+ /opt/ros/hydro/include/geometry_msgs/PoseStamped.h
  /opt/ros/hydro/include/geometry_msgs/Quaternion.h
  /opt/ros/hydro/include/geometry_msgs/Vector3.h
+ /opt/ros/hydro/include/nav_msgs/Path.h
  /opt/ros/hydro/include/ros/advertise_options.h
  /opt/ros/hydro/include/ros/advertise_service_options.h
  /opt/ros/hydro/include/ros/assert.h

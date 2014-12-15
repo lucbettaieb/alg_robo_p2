@@ -11,6 +11,8 @@
 #include <planning/global_planner.h>
 
 ros::Subscriber sub_map2d_;
+ros::Publisher pub_critArea_;
+ros::Publisher pub_path_;
 bool gotMap = false;
 const int width = 1230;
 const int height = 630;
@@ -22,9 +24,11 @@ std::vector<obstaclePoint> obstacles;
 std::vector<geometry_msgs::Point> lowerPoints;
 std::vector<geometry_msgs::Point> upperPoints;
 
-visualization_msgs::Marker criticalArea;
 
-ros::Publisher pub_critArea_;
+visualization_msgs::Marker criticalArea;
+nav_msgs::Path path;
+
+
 
 obstaclePoint makeObstacle(int ex, int wy){
 	obstaclePoint p;
@@ -42,6 +46,23 @@ geometry_msgs::Point makePoint(float ex, float wy){
 	point.z = 0;
 
 	return point;
+}
+
+geometry_msgs::PoseStamped makePoseXY(float x, float y, int iSeq){
+	//this causes a segmentation fault... ;c
+	geometry_msgs::PoseStamped poseXY;
+
+	poseXY.header.seq = iSeq;
+	poseXY.header.stamp = ros::Time().now();
+	poseXY.header.frame_id = "world";
+
+	poseXY.pose.position.x = x;
+	poseXY.pose.position.y = y;
+	poseXY.pose.position.z = 0;
+
+	return poseXY;
+	//Assign quaternion later as it will depend on the next pose.
+
 }
 
 //-----------Regular functions----------//
@@ -67,9 +88,12 @@ void removeDuplicates(){
 	//Weird duplicated values have now been removed.  Now they need to be sorted by their x coordinate.
 
 }
-
+bool wayToSort(geometry_msgs::Point i, geometry_msgs::Point j){
+	return i.x < j.x;
+}
 void sortByX(){
-	
+	std::sort(lowerPoints.begin(), lowerPoints.end(), wayToSort);
+	std::sort(upperPoints.begin(), upperPoints.end(), wayToSort);
 }
 
 
@@ -93,7 +117,7 @@ void processObstacles(){
 	}
 	//Set up marker variables...
 	criticalArea.header.stamp = ros::Time();
-	criticalArea.header.frame_id = "world";
+	criticalArea.header.frame_id = "map";
 	criticalArea.ns = "my_namespace";
 	criticalArea.id = 0;
 	criticalArea.type = visualization_msgs::Marker::POINTS;
@@ -128,17 +152,45 @@ void findObstacles(){
 	ROS_INFO("%i obstacles found in %f seconds.", (int)obstacles.size(), (float)(end-start));
 
 	processObstacles();
-
 }
+
 
 void findMidpoints(){
 
-	for(int i = 0; i < lowerPoints.size(); i++){
-		std::cout << "lowerpoint x: " << lowerPoints.at(i).x << "upperPoints x: " << upperPoints.at(i).x << std::endl;
-		std::cout << "lowerpoint y: " << lowerPoints.at(i).y << "upperPoints y: " << upperPoints.at(i).y << std::endl;
+	//Here were going to create a path!
+
+	// for(int i = 0; i < lowerPoints.size(); i++){
+	// 	std::cout << "lowerpoint x: " << lowerPoints.at(i).x << "upperPoints x: " << upperPoints.at(i).x << std::endl;
+	// 	std::cout << "lowerpoint y: " << lowerPoints.at(i).y << "upperPoints y: " << upperPoints.at(i).y << std::endl;
+	// }
+	
+	for(int i = 0; i < lowerPoints.size(); i++){	
+		path.poses.push_back(makePoseXY(lowerPoints.at(i).x, (upperPoints.at(i).y-0.5*(upperPoints.at(i).y-lowerPoints.at(i).y)), i));
+
 	}
+	for(int i = 0; i < path.poses.size(); i++){ //add to marker fo viewin'
+		criticalArea.points.push_back(path.poses.at(i).pose.position);
+	}
+}
+
+void assignAngles(){
+	for(int i = 0; i < path.poses.size()-1; i++){
+   	 //Iterate through poses minus last because it is the goal pose and has no next!
+    	path.poses.at(i).pose.orientation.x = (path.poses.at(i+1).pose.position.x - path.poses.at(i).pose.position.x) * (path.poses.at(i+1).pose.position.y - path.poses.at(i).pose.position.y);
+    	path.poses.at(i).pose.orientation.y = (path.poses.at(i+1).pose.position.x - path.poses.at(i).pose.position.x) * (path.poses.at(i+1).pose.position.y - path.poses.at(i).pose.position.y);
+    	path.poses.at(i).pose.orientation.z = (path.poses.at(i+1).pose.position.x - path.poses.at(i).pose.position.x) * (path.poses.at(i+1).pose.position.y - path.poses.at(i).pose.position.y);
+    	path.poses.at(i).pose.orientation.w = sqrt((pow((path.poses.at(i+1).pose.position.x - path.poses.at(i).pose.position.x), 2) + pow((path.poses.at(i+1).pose.position.y - path.poses.at(i).pose.position.y), 2)));
+  	}
+  	//why not assign path a header now?
+
+  	path.header.seq = 1337;
+  	path.header.stamp = ros::Time().now();
+  	path.header.frame_id = "map";
+
+
 
 }
+
 
 void gotMap2dCB(const algp2_msgs::Map2D &map2d){
 	if(!gotMap){
@@ -156,8 +208,21 @@ void gotMap2dCB(const algp2_msgs::Map2D &map2d){
 
 		//Now we have the obstacles and critical points, let's find the midpoints that we're going to navigate to!
 		findMidpoints();
+		//Now the midpoints have been calculated, we will need to set the angles of the poses to point toward the next goal
+		//!!Quaternions are scary
+		assignAngles();
 
+		for(int i = 0; i < path.poses.size(); i++){
+			std::cout << "x: " << path.poses.at(i).pose.position.x << std::endl;
+			std::cout << "y: " << path.poses.at(i).pose.position.y << std::endl;
+			std::cout << "z: " << path.poses.at(i).pose.position.z << std::endl;
 
+			std::cout << "x: " << path.poses.at(i).pose.orientation.x << std::endl;
+			std::cout << "y: " << path.poses.at(i).pose.orientation.y << std::endl;
+			std::cout << "z: " << path.poses.at(i).pose.orientation.z << std::endl;
+			std::cout << "w: " << path.poses.at(i).pose.orientation.w << std::endl;
+
+		}
 
 	}
 }
@@ -170,10 +235,11 @@ int main(int argc, char** argv){
 	//First, let's get the map.
 	ROS_INFO("Let's do some global planning! :)");
 	pub_critArea_ = nh.advertise<visualization_msgs::Marker>("/criticalArea", 1);
-	
+	pub_path_ = nh.advertise<nav_msgs::Path>("/path", 1);
 	while(ros::ok()){
 		sub_map2d_ = nh.subscribe("/map2d", 10, gotMap2dCB);
 		pub_critArea_.publish(criticalArea);
+		pub_path_.publish(path);
 		ros::Duration(0.05).sleep();
 
 		ros::spinOnce();

@@ -33,7 +33,13 @@ visualization_msgs/Marker.h
 -
 geometry_msgs/Point.h
 -
+nav_msgs/Path.h
+-
 vector
+-
+algorithm
+-
+math.h
 -
 
 /home/luc/ros_workspace/alg_robo_p2/catkin/src/planning/src/global_planner.cpp
@@ -92,6 +98,26 @@ geometry_msgs/Point.h
 geometry_msgs/Quaternion.h
 -
 
+/opt/ros/hydro/include/geometry_msgs/PoseStamped.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+std_msgs/Header.h
+-
+geometry_msgs/Pose.h
+-
+
 /opt/ros/hydro/include/geometry_msgs/Quaternion.h
 string
 -
@@ -122,6 +148,26 @@ ros/serialization.h
 ros/builtin_message_traits.h
 -
 ros/message_operations.h
+-
+
+/opt/ros/hydro/include/nav_msgs/Path.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+std_msgs/Header.h
+-
+geometry_msgs/PoseStamped.h
 -
 
 /opt/ros/hydro/include/ros/advertise_options.h
