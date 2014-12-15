@@ -1,6 +1,6 @@
 /*
 * global_planner
-* A node that will generate a global path through a quadtree from a pose to a destination.
+* A node that will generate a global path through a trapezoidal cell decomposition from a pose to a destination.
 *
 *	Luc A. Bettaieb
 * 	bettaieb@case.edu
@@ -45,21 +45,48 @@ geometry_msgs::Point makePoint(float ex, float wy){
 }
 
 //-----------Regular functions----------//
+
+void removeDuplicates(){
+	float tolerance = 0.02;
+
+	for(int checkMe = 0; checkMe < lowerPoints.size(); checkMe++){
+		for(int i = 0; i < lowerPoints.size(); i++){
+			if( (i != checkMe) && ((lowerPoints.at(i).x < lowerPoints.at(checkMe).x + tolerance) && (lowerPoints.at(i).x > lowerPoints.at(checkMe).x - tolerance))){
+				lowerPoints.erase(lowerPoints.begin()+i);
+			}
+		}
+	}
+
+	for(int checkMe = 0; checkMe < upperPoints.size(); checkMe++){
+		for(int i = 0; i < upperPoints.size(); i++){
+			if( (i != checkMe) && ((upperPoints.at(i).x < upperPoints.at(checkMe).x + tolerance) && (upperPoints.at(i).x > upperPoints.at(checkMe).x - tolerance))){
+				upperPoints.erase(upperPoints.begin()+i);
+			}
+		}
+	}
+	//Weird duplicated values have now been removed.  Now they need to be sorted by their x coordinate.
+
+}
+
+void sortByX(){
+	
+}
+
+
 void processObstacles(){
 	//This function will find critial points of obstacles.
 	//Theory: find an obstacle that does not have neighboring obstacles in at least 3 cardinal directions
-
+	int offsetChecker = 3;
 	for(int i = 0; i < obstacles.size(); i++){
-
 		//Check for lower extrema
-		if(map_.at(obstacles.at(i).y).at(obstacles.at(i).x-3) == 0 && map_.at(obstacles.at(i).y).at(obstacles.at(i).x+3) == 0 && map_.at(obstacles.at(i).y+3).at(obstacles.at(i).x) == 0) {
+		if(map_.at(obstacles.at(i).y).at(obstacles.at(i).x-offsetChecker) == 0 && map_.at(obstacles.at(i).y).at(obstacles.at(i).x+offsetChecker) == 0 && map_.at(obstacles.at(i).y+offsetChecker).at(obstacles.at(i).x) == 0) {
 			//criticalArea for visualizing points
 			criticalArea.points.push_back(makePoint(obstacles.at(i).x*0.02, obstacles.at(i).y*0.02));
 			lowerPoints.push_back(makePoint(obstacles.at(i).x*0.02, obstacles.at(i).y*0.02));
 		}
 
 		//Check for upper extrema
-		else if(map_.at(obstacles.at(i).y).at(obstacles.at(i).x-3) == 0 && map_.at(obstacles.at(i).y).at(obstacles.at(i).x+3) == 0 && map_.at(obstacles.at(i).y-3).at(obstacles.at(i).x) == 0){
+		else if(map_.at(obstacles.at(i).y).at(obstacles.at(i).x-offsetChecker) == 0 && map_.at(obstacles.at(i).y).at(obstacles.at(i).x+offsetChecker) == 0 && map_.at(obstacles.at(i).y-offsetChecker).at(obstacles.at(i).x) == 0){
 			criticalArea.points.push_back(makePoint(obstacles.at(i).x*0.02, obstacles.at(i).y*0.02));
 			upperPoints.push_back(makePoint(obstacles.at(i).x*0.02, obstacles.at(i).y*0.02));
 		}
@@ -81,6 +108,9 @@ void processObstacles(){
 	criticalArea.pose.orientation.y = 0.0;
 	criticalArea.pose.orientation.z = 0.0;
 	criticalArea.pose.orientation.w = 1.0;
+
+	removeDuplicates();
+	sortByX();
 }
 
 void findObstacles(){
@@ -98,10 +128,16 @@ void findObstacles(){
 	ROS_INFO("%i obstacles found in %f seconds.", (int)obstacles.size(), (float)(end-start));
 
 	processObstacles();
+
 }
 
 void findMidpoints(){
-	
+
+	for(int i = 0; i < lowerPoints.size(); i++){
+		std::cout << "lowerpoint x: " << lowerPoints.at(i).x << "upperPoints x: " << upperPoints.at(i).x << std::endl;
+		std::cout << "lowerpoint y: " << lowerPoints.at(i).y << "upperPoints y: " << upperPoints.at(i).y << std::endl;
+	}
+
 }
 
 void gotMap2dCB(const algp2_msgs::Map2D &map2d){
