@@ -10,6 +10,8 @@ SET(CMAKE_FORCE_UNIX_PATHS 1)
 
 # The C and CXX include file search paths:
 SET(CMAKE_C_INCLUDE_PATH
+  "/home/luc/ros_workspace/alg_robo_p2/catkin/src/planning/INCLUDE_DIRS"
+  "/home/luc/ros_workspace/alg_robo_p2/catkin/src/planning/include"
   "/home/luc/ros_workspace/alg_robo_p2/catkin/devel/include"
   "/opt/ros/hydro/include"
   )

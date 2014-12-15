@@ -3,6 +3,7 @@
 
 planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.o
  /home/luc/ros_workspace/alg_robo_p2/catkin/devel/include/algp2_msgs/Map2D.h
+ /home/luc/ros_workspace/alg_robo_p2/catkin/src/planning/include/planning/global_planner.h
  /home/luc/ros_workspace/alg_robo_p2/catkin/src/planning/src/global_planner.cpp
  /opt/ros/hydro/include/XmlRpcDecl.h
  /opt/ros/hydro/include/XmlRpcValue.h

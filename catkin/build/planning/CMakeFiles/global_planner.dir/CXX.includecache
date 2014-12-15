@@ -24,12 +24,16 @@ ros/message_operations.h
 std_msgs/Int8MultiArray.h
 -
 
-/home/luc/ros_workspace/alg_robo_p2/catkin/src/planning/src/global_planner.cpp
+/home/luc/ros_workspace/alg_robo_p2/catkin/src/planning/include/planning/global_planner.h
 ros/ros.h
 -
 algp2_msgs/Map2D.h
 -
 vector
+-
+
+/home/luc/ros_workspace/alg_robo_p2/catkin/src/planning/src/global_planner.cpp
+planning/global_planner.h
 -
 
 /opt/ros/hydro/include/XmlRpcDecl.h
