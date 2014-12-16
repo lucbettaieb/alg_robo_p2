@@ -20,7 +20,17 @@ include_directories(
 )
 
 add_executable(global_planner src/global_planner.cpp)
+add_executable(local_planner src/local_planner.cpp)
+
+# add_executable(simple_steering_pose src/simple_steering_pose.cpp)
 
 target_link_libraries(global_planner
    ${catkin_LIBRARIES}
 )
+
+target_link_libraries(local_planner
+   ${catkin_LIBRARIES}
+)
+# target_link_libraries(simple_steering_pose 
+#    ${catkin_LIBRARIES}
+# )

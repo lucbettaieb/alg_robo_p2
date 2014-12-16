@@ -19,9 +19,11 @@ const int height = 630;
 ros::Subscriber sub_map2d_;
 ros::Publisher pub_critArea_;
 ros::Publisher pub_path_;
+ros::Publisher pub_poseArray_;
 
 visualization_msgs::Marker criticalArea;
 nav_msgs::Path path;
+geometry_msgs::PoseArray poseArray_;
 
 /*----------------Vector Fields-----*/
 std::vector< std::vector<int> > map_(height, std::vector<int>(width, 0)); //regular map.at(y).at(x)
@@ -174,9 +176,17 @@ void assignAngles(){
 	for(int i = 0; i < path.poses.size()-1; i++){
    	 //Iterate through poses minus last because it is the goal pose and has no next!
     	path.poses.at(i).pose.orientation.x = (path.poses.at(i+1).pose.position.x - path.poses.at(i).pose.position.x) * (path.poses.at(i+1).pose.position.y - path.poses.at(i).pose.position.y);
-    	path.poses.at(i).pose.orientation.y = (path.poses.at(i+1).pose.position.x - path.poses.at(i).pose.position.x) * (path.poses.at(i+1).pose.position.y - path.poses.at(i).pose.position.y);
+    	//path.poses.at(i).pose.orientation.y = (path.poses.at(i+1).pose.position.x - path.poses.at(i).pose.position.x) * (path.poses.at(i+1).pose.position.y - path.poses.at(i).pose.position.y);
+    	path.poses.at(i).pose.orientation.y = 0;
     	path.poses.at(i).pose.orientation.z = (path.poses.at(i+1).pose.position.x - path.poses.at(i).pose.position.x) * (path.poses.at(i+1).pose.position.y - path.poses.at(i).pose.position.y);
+    	
     	path.poses.at(i).pose.orientation.w = sqrt((pow((path.poses.at(i+1).pose.position.x - path.poses.at(i).pose.position.x), 2) + pow((path.poses.at(i+1).pose.position.y - path.poses.at(i).pose.position.y), 2)));
+  		
+  		double divisor = sqrt(pow(path.poses.at(i).pose.orientation.x, 2) + pow(path.poses.at(i).pose.orientation.y, 2) + pow(path.poses.at(i).pose.orientation.z, 2) + pow(path.poses.at(i).pose.orientation.w, 2));
+  		path.poses.at(i).pose.orientation.x /= divisor;
+  		path.poses.at(i).pose.orientation.y /= divisor;
+  		path.poses.at(i).pose.orientation.z /= divisor;
+  		path.poses.at(i).pose.orientation.w /= divisor;
   	}
   	//why not assign path a header now?
 
@@ -219,6 +229,14 @@ void gotMap2dCB(const algp2_msgs::Map2D &map2d){
 	}
 }
 
+void createPoseArray(){
+	for(int i = 0; i < path.poses.size(); i++)
+		poseArray_.poses.push_back(path.poses.at(i).pose);
+	poseArray_.header.seq = 1;
+	poseArray_.header.stamp = ros::Time().now();
+	poseArray_.header.frame_id = "map";
+}
+
 int main(int argc, char** argv){
 	ros::init(argc, argv, "global_planner");
 	ros::NodeHandle nh;
@@ -226,14 +244,20 @@ int main(int argc, char** argv){
 	ROS_INFO("Let's do some global planning! :)");
 	pub_critArea_ = nh.advertise<visualization_msgs::Marker>("/criticalArea", 1);
 	pub_path_ = nh.advertise<nav_msgs::Path>("/path", 1);
+	pub_poseArray_ = nh.advertise<geometry_msgs::PoseArray>("/poseArray",1);
+
 	while(ros::ok()){
 		sub_map2d_ = nh.subscribe("/map2d", 10, gotMap2dCB);
 		pub_critArea_.publish(criticalArea);
 		pub_path_.publish(path);
+
+		createPoseArray();
+		pub_poseArray_.publish(poseArray_);
 		ros::Duration(0.05).sleep();
 
 		ros::spinOnce();
 	}
+
 	ros::spin();
 	return 0;
 }

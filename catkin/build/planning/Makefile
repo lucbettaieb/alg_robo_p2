@@ -160,6 +160,20 @@ global_planner/fast:
 	cd /home/luc/ros_workspace/alg_robo_p2/catkin/build && $(MAKE) -f planning/CMakeFiles/global_planner.dir/build.make planning/CMakeFiles/global_planner.dir/build
 .PHONY : global_planner/fast
 
+# Convenience name for target.
+planning/CMakeFiles/local_planner.dir/rule:
+	cd /home/luc/ros_workspace/alg_robo_p2/catkin/build && $(MAKE) -f CMakeFiles/Makefile2 planning/CMakeFiles/local_planner.dir/rule
+.PHONY : planning/CMakeFiles/local_planner.dir/rule
+
+# Convenience name for target.
+local_planner: planning/CMakeFiles/local_planner.dir/rule
+.PHONY : local_planner
+
+# fast build rule for target.
+local_planner/fast:
+	cd /home/luc/ros_workspace/alg_robo_p2/catkin/build && $(MAKE) -f planning/CMakeFiles/local_planner.dir/build.make planning/CMakeFiles/local_planner.dir/build
+.PHONY : local_planner/fast
+
 src/global_planner.o: src/global_planner.cpp.o
 .PHONY : src/global_planner.o
 
@@ -184,6 +198,30 @@ src/global_planner.cpp.s:
 	cd /home/luc/ros_workspace/alg_robo_p2/catkin/build && $(MAKE) -f planning/CMakeFiles/global_planner.dir/build.make planning/CMakeFiles/global_planner.dir/src/global_planner.cpp.s
 .PHONY : src/global_planner.cpp.s
 
+src/local_planner.o: src/local_planner.cpp.o
+.PHONY : src/local_planner.o
+
+# target to build an object file
+src/local_planner.cpp.o:
+	cd /home/luc/ros_workspace/alg_robo_p2/catkin/build && $(MAKE) -f planning/CMakeFiles/local_planner.dir/build.make planning/CMakeFiles/local_planner.dir/src/local_planner.cpp.o
+.PHONY : src/local_planner.cpp.o
+
+src/local_planner.i: src/local_planner.cpp.i
+.PHONY : src/local_planner.i
+
+# target to preprocess a source file
+src/local_planner.cpp.i:
+	cd /home/luc/ros_workspace/alg_robo_p2/catkin/build && $(MAKE) -f planning/CMakeFiles/local_planner.dir/build.make planning/CMakeFiles/local_planner.dir/src/local_planner.cpp.i
+.PHONY : src/local_planner.cpp.i
+
+src/local_planner.s: src/local_planner.cpp.s
+.PHONY : src/local_planner.s
+
+# target to generate assembly for a file
+src/local_planner.cpp.s:
+	cd /home/luc/ros_workspace/alg_robo_p2/catkin/build && $(MAKE) -f planning/CMakeFiles/local_planner.dir/build.make planning/CMakeFiles/local_planner.dir/src/local_planner.cpp.s
+.PHONY : src/local_planner.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -196,11 +234,15 @@ help:
 	@echo "... install/local"
 	@echo "... install/strip"
 	@echo "... list_install_components"
+	@echo "... local_planner"
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... src/global_planner.o"
 	@echo "... src/global_planner.i"
 	@echo "... src/global_planner.s"
+	@echo "... src/local_planner.o"
+	@echo "... src/local_planner.i"
+	@echo "... src/local_planner.s"
 .PHONY : help
 
 

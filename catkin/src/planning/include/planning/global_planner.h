@@ -6,8 +6,7 @@
 #include <geometry_msgs/Point.h>
 
 #include <nav_msgs/Path.h>
-
-
+#include <geometry_msgs/PoseArray.h>
 
 #include <vector>
 #include <algorithm>

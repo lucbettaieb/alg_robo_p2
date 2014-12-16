@@ -1082,6 +1082,19 @@ global_planner/fast:
 	$(MAKE) -f planning/CMakeFiles/global_planner.dir/build.make planning/CMakeFiles/global_planner.dir/build
 .PHONY : global_planner/fast
 
+#=============================================================================
+# Target rules for targets named local_planner
+
+# Build rule for target.
+local_planner: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 local_planner
+.PHONY : local_planner
+
+# fast build rule for target.
+local_planner/fast:
+	$(MAKE) -f planning/CMakeFiles/local_planner.dir/build.make planning/CMakeFiles/local_planner.dir/build
+.PHONY : local_planner/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1167,6 +1180,7 @@ help:
 	@echo "... topic_tools_generate_messages_lisp"
 	@echo "... topic_tools_generate_messages_py"
 	@echo "... global_planner"
+	@echo "... local_planner"
 .PHONY : help
 
 
