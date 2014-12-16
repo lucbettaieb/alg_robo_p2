@@ -23,6 +23,11 @@ geometry_msgs::Twist vel;
 bool hasPath = false;
 bool goalReached = false;
 
+float getAngleFromQuaternion(geometry_msgs::Quaternion q){
+	ros::spinOnce();
+	//return atan2(2*q.y*q.w-2*q.x*q.z , 1 - pow(2*q.y,2) - pow(2*q.z,2));
+	return atan2(2*(q.w*q.x), pow(q.w,2)-pow(q.x,2)+pow(q.z,2));
+}
 /*----------Functions----------*/
 void pathCB(const nav_msgs::Path &path){
 	//ROS_INFO("got path.");
@@ -31,43 +36,73 @@ void pathCB(const nav_msgs::Path &path){
 }
 void odomCB(const nav_msgs::Odometry &odom){
 	//ROS_INFO("got new odom.");
-	odom_ = odom;
-}
-float getAngleFromQuaternion(geometry_msgs::Quaternion q){
-	return atan2(2*q.y*q.w-2*q.x*q.z , 1 - pow(2*q.y,2) - pow(2*q.z,2));
-
-}
-
-void navigateToSubgoal(geometry_msgs::Pose &subgoal){
-	ROS_INFO("We be navigatin'.");
-	std::cout << "" << (tf::getYaw(odom_.pose.pose.orientation) - tf::getYaw(subgoal.orientation)) <<std::endl;
-	//(tf::getYaw(odom_.pose.pose.orientation) - tf::getYaw(subgoal.orientation)  > .1)
-
-	while( getAngleFromQuaternion(odom_.pose.pose.orientation) - getAngleFromQuaternion(subgoal.orientation) > 0.1  ){
-		ros::spinOnce();
-
-		//(((1/M_PI)*(2*acos(odom_.pose.pose.orientation.w))) - ((1/M_PI)*(2*acos(subgoal.orientation.w)))) > .1
-		ROS_INFO("ANGLE GO");
-		//std::cout << "delta angle? " << ((1/M_PI)*(2*acos(odom_.pose.pose.orientation.w))) - ((1/M_PI)*(2*acos(subgoal.orientation.w))) << std::endl;
-		
-		vel.angular.z = 3 * atan2(subgoal.position.y - odom_.pose.pose.position.y, subgoal.position.x - odom_.pose.pose.position.x);
-		
-		pub_vel_.publish(vel);
-	}
+	odom_= odom;
 	
-	vel.angular.z = 0;
-	while(! ((odom_.pose.pose.position.x < subgoal.position.x + .05) && (odom_.pose.pose.position.x > subgoal.position.x - 0.5)) ) { //&& (odom_.pose.pose.position.y == subgoal.position.y))
-		ros::spinOnce();
-		//ROS_INFO("TRANS GO");
-
-		
-		//std::cout << "ang: " <<((1/M_PI)*(2*acos(odom_.pose.pose.orientation.w))) << std::endl;
-		//send a linear velocity proportional to the distance 
-		vel.linear.x = .4 * sqrt(pow(subgoal.position.x - odom_.pose.pose.position.x, 2)+pow(subgoal.position.y - odom_.pose.pose.position.y, 2));
-
-		pub_vel_.publish(vel);
-	}
 }
+
+
+// void navigateToSubgoal(geometry_msgs::Pose subgoal){
+// 	ROS_INFO("We be navigatin'.");
+// 	vel.angular.z = 0;
+// 	while(! ((odom_.pose.pose.position.x < subgoal.position.x + .05) && (odom_.pose.pose.position.x > subgoal.position.x - 0.5)) ) { //&& (odom_.pose.pose.position.y == subgoal.position.y))
+// 		ros::spinOnce();
+
+// 		//ROS_INFO("TRANS GO");
+// 		// if(getAngleFromQuaternion(odom_.pose.pose.orientation) - getAngleFromQuaternion(subgoal.orientation) > 0.1){
+// 		// 	ROS_INFO("pos");
+// 		// 	std::cout << "x: " << odom_.pose.pose.position.x << std::endl;
+// 		// 	vel.angular.z = 1 * atan2(subgoal.position.y - odom_.pose.pose.position.y, subgoal.position.x - odom_.pose.pose.position.x);
+		
+// 		// }
+
+// 		vel.angular.z = .3 * atan2(subgoal.position.y - odom_.pose.pose.position.y, subgoal.position.x - odom_.pose.pose.position.x);
+// 		vel.angular.z = .7 * (getAngleFromQuaternion() - getAngleFromQuaternion());
+		
+// 		//std::cout << "ang: " <<((1/M_PI)*(2*acos(odom_.pose.pose.orientation.w))) << std::endl;
+// 		//send a linear velocity proportional to the distance 
+// 		vel.linear.x = .2 * sqrt(pow(subgoal.position.x - odom_.pose.pose.position.x, 2)+pow(subgoal.position.y - odom_.pose.pose.position.y, 2));
+
+// 		pub_vel_.publish(vel);
+// 		ros::spinOnce();
+// 	}
+// }
+
+geometry_msgs::Twist stuffTwistWithVel(int select, float vel){
+	geometry_msgs::Twist cmd;
+	
+	cmd.linear.x = 0;
+	cmd.linear.y = 0;
+	cmd.linear.z = 0;
+	
+	cmd.angular.x = 0;
+	cmd.angular.y = 0;
+	cmd.angular.z = 0;
+	
+	if(select == 0){ 		//Translational
+		cmd.linear.x = vel;
+
+	} else if(select == 1){	//Rotational
+		cmd.angular.z = vel;
+
+	} else{					//Zero
+		return cmd;
+
+	}
+
+}
+
+void changeOrientation(geometry_msgs::Quaternion robot, geometry_msgs::Quaternion goal){
+	ROS_INFO("changeOrientation");
+
+	vel.angular.z = getAngleFromQuaternion(goal) - getAngleFromQuaternion(robot);
+	pub_vel_.publish(vel);
+
+	ros::Duration(1).sleep();
+
+	vel.angular.z = 0;
+	pub_vel_.publish(vel);
+}
+
 
 /*----------Main----------*/
 int main(int argc, char** argv){
@@ -75,32 +110,61 @@ int main(int argc, char** argv){
 	ros::NodeHandle nh;
 
 	sub_path_ = nh.subscribe("/path", 10, pathCB);
+
 	sub_odom_ = nh.subscribe("/robot0/odom", 10, odomCB);
 
 	pub_vel_ = nh.advertise<geometry_msgs::Twist>("/robot0/cmd_vel", 1);
 
-	geometry_msgs::Pose subgoal;
-
-	while(ros::ok() && !goalReached){
+	while(ros::ok()){
 		if(hasPath){
 			for(int i = 0; i < path_.poses.size(); i++){
-				ros::spinOnce();
-				vel.linear.x = 0;
-				vel.angular.z = 0;
-				
-				subgoal = path_.poses.at(i).pose;
-				ROS_INFO("!!!!!!!!!!!!~~~~~_~new pose");
-				//std::cout << path_.poses.at(i).pose.position.x <<std::endl;
-				navigateToSubgoal(subgoal);
-					//do nothing?
+				path_.poses.at(i).pose.orientation;
+				float y = path_.poses.at(i).pose.position.y - odom_.pose.pose.position.y;
+				ROS_INFO("Y: %f", y);
+				float x = path_.poses.at(i).pose.position.x - odom_.pose.pose.position.x;
+				float omega = atan2(y, x);
+
+				pub_vel_.publish(stuffTwistWithVel(1, omega));
+
+
+				ros::Duration(1).sleep();
+				pub_vel_.publish(stuffTwistWithVel(2, 0));
+
+
+
+				float v = sqrt(pow(x,2)+pow(y,2));
+				pub_vel_.publish(stuffTwistWithVel(0, v));
+				ros::Duration(1).sleep();
+				pub_vel_.publish(stuffTwistWithVel(2, 0));
+
+				ROS_INFO("Did it work?");
+				ros::Duration(2).sleep();
+
 			}
 		}
-
-
 		ros::spinOnce();
 	}
+		
 
-	
+		
+		// if(hasPath){
+		// 	int i = 0;
+		// 	while(i < path_.poses.size()){
+			
+		// 		ros::spinOnce();
+				
+		// 		ROS_INFO("New pose!");
+		// 		//Angle robot toward goal pose.
+		// 		changeOrientation(odom_.pose.pose.orientation, path_.poses.at(i).pose.orientation);
+		// 		//navigateToSubgoal(path_.poses.at(i).pose);
+
+		// 		if(odom_.pose.pose.position.x == path_.poses.at(i).pose.position.x)
+		// 			i++;
+		// 	}
+		// }
+		// ros::spinOnce();
+
+
 	ros::spin();
 	return 0;
 }
